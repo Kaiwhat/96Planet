@@ -6,6 +6,9 @@ const nextMonthBtn = document.getElementById('next-month');
 
 // 初始化當前日期
 let currentDate = new Date();
+let Nowaday = new Date();
+let date = 1;
+let selectedDay = null; // 用於存儲選中的日期
 
 // 渲染月曆
 function renderCalendar() {
@@ -27,6 +30,7 @@ function renderCalendar() {
   // 創建日期格子
   let date = 1;
   for (let i = 0; i < 6; i++) {
+    let k = 1;
     for (let j = 0; j < 7; j++) {
         const day = document.createElement('div');
 
@@ -38,25 +42,66 @@ function renderCalendar() {
         } else if (date > lastDayOfMonth.getDate()) {
             // 在最後一週補充下個月的日期
             //day.classList.add('next-month');
+            day.textContent = k++;
+            day.style.color = "gray";
+            i = 7;
         } else {
             // 當月日期
             day.textContent = date;
-            if (j == 0 || j == 6){
-                day.style.color = 'red';
+
+            if(date == Nowaday.getDate() && currentDate.getMonth() == Nowaday.getMonth() && currentDate.getFullYear() == Nowaday.getFullYear()){
+                day.style.backgroundColor = '#D3D3D3';
+                day.style.borderRadius = '99em';
+                day.style.transition = 'width 0.2s ease-in-out, height 0.2s ease-in-out';
+            }else if (j == 0 || j == 6){
+              day.style.color = 'red';
             }
             // 根據資料庫記錄設置背景顏色
+            /*
             const databaseRecord = getDatabaseRecordForDate(currentDate.getFullYear(), currentDate.getMonth() + 1, date);
             if (databaseRecord === 'approved') {
                 day.style.backgroundColor = '';
             } else if (databaseRecord === 'pending') {
                 day.style.backgroundColor = '';
             }
+            */
+
+            // 添加點擊事件監聽器
+            day.addEventListener('click', () => {
+              selectDay(day, date);
+            });
 
             date++;
         }
 
         calendardays.appendChild(day);
     }
+  }
+}
+
+function DateChoose(dateString) {
+  document.getElementById('gobook-Date').value = dateString || '';
+}
+
+function selectDay(dayElement, pickdate) {
+  // 清除之前選中的日期
+  if (selectedDay) {
+    selectedDay.style.backgroundColor = '';
+  }
+
+  // 設置新選中的日期
+  if (dayElement.classList.contains('prev-month') || dayElement.classList.contains('next-month')) {
+    // 不選中上個月或下個月的日期
+    selectedDay = null;
+    DateChoose(null); // 清空输入框
+  } else {
+    selectedDay = dayElement;
+    selectedDay.style.backgroundColor = 'pink';
+    selectedDay.style.borderRadius = '99em';
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+    const selectedDate = `${year}-${month.toString().padStart(2, '0')}-${pickdate.toString()}`;
+    DateChoose(selectedDate); // 更新输入框
   }
 }
 
@@ -85,3 +130,36 @@ nextMonthBtn.addEventListener('click', nextMonth);
 
 // 初始渲染月曆
 renderCalendar();
+
+
+var images = ['image/image1.jpg', 'image/image2.jpg', 'image/image3.jpg', 'image/image4.jpg', 'image/image5.jpg'];
+var currentimg = 0;
+
+var changeimg = function(num){
+  currentimg = (currentimg + num + 5)%5;
+  document.getElementById('main_image').src = images[currentimg];
+};
+
+document.getElementById('prev').onclick = function(){
+  changeimg(-1);
+  clearInterval(intervalId); // 清除之前的計時器
+  startAutoPlay(); // 重新啟動計時器
+};
+
+document.getElementById('next').onclick = function(){
+  changeimg(1);
+  clearInterval(intervalId); // 清除之前的計時器
+  startAutoPlay(); // 重新啟動計時器  
+};
+
+let intervalId;
+const interval = 5000; // 5秒的間隔時間
+
+function startAutoPlay() {
+  intervalId = setInterval(() => {
+    changeimg(1);
+  }, interval);
+}
+
+startAutoPlay();
+DateChoose();

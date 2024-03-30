@@ -9,10 +9,22 @@
 </head>
 <body>
     <h2>96Planetstudio</h2>
+    <div class="slide">
+        <div class="image-box">
+            <img id="main_image" src="image/image1.jpg">
+        </div>
+        <div class="toolbar">
+            <div class="nav">
+                <div id="prev"><<</div>
+                <div id="next">>></div>
+            </div>
+        </div>
+    </div>
+    
     <div class="Booking" id="Booking">
         <form id="BookingForm" action="" method="post" >
-            <input id="gobook-Name"type="text" placeholder="姓名:" required autofocus>
-            <input id="gobook-Date" type="date" value="" required/>
+            <input id="gobook-Name" type="text" placeholder="姓名:" required autofocus>
+            <input id="gobook-Date" type="text" value="" disabled required/>
             <input id="gobook-Count" type="text" placeholder="人數:" required>
             <input id="gobook-Note" type="text" placeholder="備註:" required>
             <input id="gobook-Phone" type="text" placeholder="常用電話:" required>
