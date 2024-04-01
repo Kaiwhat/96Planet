@@ -7,7 +7,6 @@ const nextMonthBtn = document.getElementById('next-month');
 // 初始化當前日期
 let currentDate = new Date();
 let Nowaday = new Date();
-let date = 1;
 let selectedDay = null; // 用於存儲選中的日期
 
 // 渲染月曆
@@ -29,7 +28,10 @@ function renderCalendar() {
 
   // 創建日期格子
   let date = 1;
+  let i = 0;
+  let stop = false;
   for (let i = 0; i < 6; i++) {
+    if(stop) break;
     let k = 1;
     for (let j = 0; j < 7; j++) {
         const day = document.createElement('div');
@@ -44,7 +46,7 @@ function renderCalendar() {
             //day.classList.add('next-month');
             day.textContent = k++;
             day.style.color = "gray";
-            i = 7;
+            stop = true;
         } else {
             // 當月日期
             day.textContent = date;
@@ -68,7 +70,7 @@ function renderCalendar() {
 
             // 添加點擊事件監聽器
             day.addEventListener('click', () => {
-              selectDay(day, date);
+              selectDay(day, i, j, firstDayIndex);
             });
 
             date++;
@@ -83,7 +85,7 @@ function DateChoose(dateString) {
   document.getElementById('gobook-Date').value = dateString || '';
 }
 
-function selectDay(dayElement, pickdate) {
+function selectDay(dayElement, i, j, dayminus) {
   // 清除之前選中的日期
   if (selectedDay) {
     selectedDay.style.backgroundColor = '';
@@ -100,7 +102,7 @@ function selectDay(dayElement, pickdate) {
     selectedDay.style.borderRadius = '99em';
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1;
-    const selectedDate = `${year}-${month.toString().padStart(2, '0')}-${pickdate.toString()}`;
+    const selectedDate = `${year}-${month.toString().padStart(2, '0')}-${(i*7+j+1-dayminus).toString().padStart(2, '0')}`;
     DateChoose(selectedDate); // 更新输入框
   }
 }
@@ -162,4 +164,4 @@ function startAutoPlay() {
 }
 
 startAutoPlay();
-DateChoose();
+DateChoose("請在下方日曆選取時間");
