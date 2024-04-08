@@ -11,10 +11,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 15px;
 }
 
-.slide {
-    margin: 0 auto;
+.slide { 
     border: 1px solid black;
     width: 95%;
     background-color: white;
@@ -45,8 +45,6 @@ img {
 
 
 .Booking{
-
-    margin-top: 15px;
     background-color: #fff;
     border-radius: 30px;
     box-shadow: 0 5px 5px rgba(0, 0, 0.35);
@@ -94,7 +92,6 @@ img {
 
 .calendar {
     height: 400px;
-    margin-top: 15px;
     width: 90%;
     background-color: white;
     border-radius: 25px;
