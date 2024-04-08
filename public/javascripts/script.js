@@ -1,15 +1,12 @@
-// 獲取必要的DOM元素
 const calendardays = document.getElementById('calendar-days');
 const currentMonthSpan = document.getElementById('current-month');
 const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
 
-// 初始化當前日期
 let currentDate = new Date();
 let Nowaday = new Date();
-let selectedDay = null; // 用於存儲選中的日期
+let selectedDay = null;
 
-// 渲染月曆
 function renderCalendar() {
   // 清空之前的日期格子
   calendardays.innerHTML = '';
@@ -19,14 +16,12 @@ function renderCalendar() {
   const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
   const lastDayOfLastMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() , 0);
 
-  // 更新當前月份標題
   currentMonthSpan.textContent = `${currentDate.getFullYear()} 年 ${currentDate.getMonth() + 1} 月`;
 
   // 獲取當月第一天是星期幾
   const firstDayIndex = firstDayOfMonth.getDay();
   const lastDayIndex = lastDayOfLastMonth.getDate();
 
-  // 創建日期格子
   let date = 1;
   let i = 0;
   let stop = false;
@@ -68,7 +63,6 @@ function renderCalendar() {
             }
             */
 
-            // 添加點擊事件監聽器
             day.addEventListener('click', () => {
               selectDay(day, i, j, firstDayIndex);
             });
@@ -107,30 +101,24 @@ function selectDay(dayElement, i, j, dayminus) {
   }
 }
 
-// 獲取資料庫記錄的函數（這裡只是一個假設的函數,你需要根據實際情況來實現）
 function getDatabaseRecordForDate(year, month, date) {
-  // 這裡需要你實現根據日期從資料庫獲取記錄的邏輯
-  // 返回值可以是 'approved'、'pending' 或者其他值
+  // approved、pending
   return 'approved';
 }
 
-// 切換到上一個月
 function prevMonth() {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar();
 }
 
-// 切換到下一個月
 function nextMonth() {
   currentDate.setMonth(currentDate.getMonth() + 1);
   renderCalendar();
 }
 
-// 綁定事件監聽器
 prevMonthBtn.addEventListener('click', prevMonth);
 nextMonthBtn.addEventListener('click', nextMonth);
 
-// 初始渲染月曆
 renderCalendar();
 
 
@@ -144,18 +132,18 @@ var changeimg = function(num){
 
 document.getElementById('prev').onclick = function(){
   changeimg(-1);
-  clearInterval(intervalId); // 清除之前的計時器
+  clearInterval(intervalId); // 清除計時器
   startAutoPlay(); // 重新啟動計時器
 };
 
 document.getElementById('next').onclick = function(){
   changeimg(1);
-  clearInterval(intervalId); // 清除之前的計時器
-  startAutoPlay(); // 重新啟動計時器  
+  clearInterval(intervalId);
+  startAutoPlay();  
 };
 
 let intervalId;
-const interval = 5000; // 5秒的間隔時間
+const interval = 5000; // 5秒
 
 function startAutoPlay() {
   intervalId = setInterval(() => {
